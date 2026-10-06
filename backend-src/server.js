@@ -1,5 +1,16 @@
+const fs = require("fs");
 const path = require("path");
-require("dotenv").config({ path: path.join(__dirname, ".env") });
+
+const envPath = path.resolve(__dirname, ".env");
+const projectRootEnvPath = path.resolve(__dirname, "..", ".env");
+
+const envConfigPath = fs.existsSync(envPath)
+  ? envPath
+  : fs.existsSync(projectRootEnvPath)
+    ? projectRootEnvPath
+    : undefined;
+
+require("dotenv").config(envConfigPath ? { path: envConfigPath } : {});
 
 const express = require("express");
 const cors = require("cors");

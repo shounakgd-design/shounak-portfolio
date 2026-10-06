@@ -1,0 +1,11 @@
+{
+  "name": "shounak-portfolio",
+  "version": "1.0.0",
+  "private": true,
+  "scripts": {
+    "dev": "node run-dev.js",
+    "build": "npm run build:frontend && npm run build:backend",
+    "build:frontend": "npm --prefix frontend-src run build",
+    "build:backend": "npm --prefix backend-src run build"
+  }
+}
