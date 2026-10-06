@@ -1,17 +1,21 @@
 const path = require("node:path");
 const { spawn } = require("node:child_process");
 
+const npmCli = process.env.npm_execpath;
+
+if (!npmCli) {
+  console.error("Run the development servers with `npm run dev` from the project root.");
+  process.exit(1);
+}
+
 const apps = [
   {
     name: "frontend",
-    cwd: path.join(__dirname, "frontend-src"),
-    script: path.join(__dirname, "frontend-src", "node_modules", "vite", "bin", "vite.js"),
+    workspace: "frontend-src",
   },
   {
     name: "backend",
-    cwd: path.join(__dirname, "backend-src"),
-    script: path.join(__dirname, "backend-src", "node_modules", "nodemon", "bin", "nodemon.js"),
-    args: ["server.js"],
+    workspace: "backend-src",
   },
 ];
 
@@ -31,8 +35,8 @@ function stop(code) {
 }
 
 for (const app of apps) {
-  const child = spawn(process.execPath, [app.script, ...(app.args || [])], {
-    cwd: app.cwd,
+  const child = spawn(process.execPath, [npmCli, "run", "dev", `--workspace=${app.workspace}`], {
+    cwd: __dirname,
     stdio: "inherit",
   });
 

@@ -2,10 +2,14 @@
   "name": "shounak-portfolio",
   "version": "1.0.0",
   "private": true,
+  "workspaces": [
+    "frontend-src",
+    "backend-src"
+  ],
   "scripts": {
     "dev": "node run-dev.js",
     "build": "npm run build:frontend && npm run build:backend",
-    "build:frontend": "npm --prefix frontend-src run build",
-    "build:backend": "npm --prefix backend-src run build"
+    "build:frontend": "npm run build --workspace=frontend-src",
+    "build:backend": "npm run build --workspace=backend-src"
   }
 }
